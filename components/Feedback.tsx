@@ -1,7 +1,8 @@
 import React from "react";
 import CustomButton from "./CustomButton";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import * as Svg from "react-native-svg";
+import { CustomText } from "./CustomText";
 
 type PropTypes = {
   points: number;
@@ -58,15 +59,15 @@ const Feedback = ({
   };
 
   return (
-    <View>
+    <View style={styles.feedback}>
       {getSvg()}
-      <Text>{page.toUpperCase()}</Text>
-      {gameOver ? <Text>GAME OVER</Text> : null}
-      <Text>
+      <CustomText>{page.toUpperCase()}</CustomText>
+      {gameOver ? <CustomText>GAME OVER</CustomText> : null}
+      <CustomText>
         You have earned {page === "success" ? earnedPoints : "no "}
         points
-      </Text>
-      <Text>Total: {points}</Text>
+      </CustomText>
+      <CustomText>Total: {points}</CustomText>
       <CustomButton
         title={gameOver ? "Play Again" : "Next Question"}
         onPress={gameOver ? () => {} : onPress}
@@ -74,5 +75,11 @@ const Feedback = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  feedback: {
+    padding: 20
+  }
+});
 
 export default Feedback;

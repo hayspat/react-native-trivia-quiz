@@ -3,7 +3,8 @@ import axios from "axios";
 import CustomButton from "../components/CustomButton";
 import Feedback from "../components/Feedback";
 import { AllHtmlEntities } from "html-entities";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { CustomText } from "../components/CustomText";
 
 interface IQuizReponse {
   response_code: number;
@@ -166,9 +167,9 @@ const Quiz = (props: PropTypes) => {
       };
 
       return (
-        <View>
+        <View style={styles}>
           <View>
-            <Text>{decodeHTML(question.question)}</Text>
+            <CustomText>{decodeHTML(question.question)}</CustomText>
           </View>
           <View>
             {isJokerUsed.used && step === isJokerUsed.step
@@ -184,18 +185,18 @@ const Quiz = (props: PropTypes) => {
       <View>
         <View>
           <View>
-            <Text>Question {step}/10</Text>
+            <CustomText>Question {step}/10</CustomText>
           </View>
           <View>
-            <Text>{points} Points</Text>
+            <CustomText>{points} Points</CustomText>
           </View>
           {whatPageToShow === "question" ? (
             <View>
-              <Text>Remaining Time: {timer}</Text>
+              <CustomText>Remaining Time: {timer}</CustomText>
             </View>
           ) : null}
         </View>
-        {renderElement() ?? <Text>Loading...</Text>}
+        {renderElement() ?? <CustomText>Loading...</CustomText>}
       </View>
       {whatPageToShow === "question" && !isJokerUsed.used && !loading ? (
         <View>
@@ -205,5 +206,30 @@ const Quiz = (props: PropTypes) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  questionContainer: {},
+  question: {
+    padding: 15
+  },
+  choices: {
+    flexWrap: "nowrap",
+    width: "50%",
+    padding: 10
+  },
+  quizContainer: {
+    width: "50%",
+    borderColor: "#9c27b0",
+    borderRadius: 10
+  },
+  topbar: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingTop: 20,
+    paddingBottom: 20,
+    backgroundColor: "#9c27b0"
+  }
+});
 
 export default Quiz;
