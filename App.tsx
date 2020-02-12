@@ -74,7 +74,6 @@ const App: React.FC = () => {
                   selectedValue={selectedCategory}
                   onValueChange={itemValue => setSelectedCategory(itemValue)}
                   style={styles.select}
-                  mode="dropdown"
                 >
                   {jsxCategories}
                 </Picker>
