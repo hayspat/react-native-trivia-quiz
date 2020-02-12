@@ -21,6 +21,7 @@ interface IQuizReponse {
 type PropTypes = {
   difficulty: string;
   category: string;
+  navigateToHome: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Quiz = (props: PropTypes) => {
@@ -81,6 +82,7 @@ const Quiz = (props: PropTypes) => {
           gameOver={step === 10}
           earnedPoints={timer * 10}
           onPress={switchToQuestionPage}
+          navigateToHome={props.navigateToHome}
         />
       );
     }
@@ -167,40 +169,42 @@ const Quiz = (props: PropTypes) => {
       };
 
       return (
-        <View style={styles}>
-          <View>
-            <CustomText>{decodeHTML(question.question)}</CustomText>
+        <>
+          <CustomText style={styles.question}>
+            {decodeHTML(question.question)}
+          </CustomText>
+
+          <View style={styles.choicesContainer}>
+            <View style={styles.choices}>
+              {isJokerUsed.used && step === isJokerUsed.step
+                ? jokerFn()
+                : choicesEl}
+            </View>
           </View>
-          <View>
-            {isJokerUsed.used && step === isJokerUsed.step
-              ? jokerFn()
-              : choicesEl}
-          </View>
-        </View>
+        </>
       );
     }
   };
   return (
     <>
-      <View>
-        <View>
-          <View>
-            <CustomText>Question {step}/10</CustomText>
-          </View>
-          <View>
-            <CustomText>{points} Points</CustomText>
-          </View>
+      <View style={styles.quizContainer}>
+        <View style={styles.topbar}>
+          <CustomText>Question {step}/10</CustomText>
+          <CustomText>{points} Points</CustomText>
+
           {whatPageToShow === "question" ? (
-            <View>
-              <CustomText>Remaining Time: {timer}</CustomText>
-            </View>
+            <CustomText>Remaining Time: {timer}</CustomText>
           ) : null}
         </View>
         {renderElement() ?? <CustomText>Loading...</CustomText>}
       </View>
-      {whatPageToShow === "question" && !isJokerUsed.used && !loading ? (
+      {whatPageToShow === "question" ? (
         <View>
-          <CustomButton onPress={handleJoker} title="Use Joker"></CustomButton>
+          <CustomButton
+            onPress={handleJoker}
+            disabled={isJokerUsed.used && !loading}
+            title="Use Joker"
+          />
         </View>
       ) : null}
     </>
@@ -208,19 +212,25 @@ const Quiz = (props: PropTypes) => {
 };
 
 const styles = StyleSheet.create({
-  questionContainer: {},
   question: {
-    padding: 15
+    padding: 15,
+    textAlign: "center",
+    textAlignVertical: "center"
+  },
+  choicesContainer: {
+    justifyContent: "center",
+    alignItems: "center"
   },
   choices: {
-    flexWrap: "nowrap",
-    width: "50%",
-    padding: 10
+    padding: 10,
+    width: "60%",
+    margin: "auto"
   },
   quizContainer: {
-    width: "50%",
+    width: "95%",
     borderColor: "#9c27b0",
-    borderRadius: 10
+    borderRadius: 10,
+    borderWidth: 3
   },
   topbar: {
     width: "100%",
