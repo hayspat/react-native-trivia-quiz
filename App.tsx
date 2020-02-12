@@ -50,7 +50,7 @@ const App: React.FC = () => {
           <Quiz
             category={selectedCategory}
             difficulty={difficulty}
-            navigateToHome={setShowQuiz}
+            showQuiz={setShowQuiz}
           />
         ) : (
           <View>

@@ -21,7 +21,7 @@ interface IQuizReponse {
 type PropTypes = {
   difficulty: string;
   category: string;
-  navigateToHome: React.Dispatch<React.SetStateAction<boolean>>;
+  showQuiz: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Quiz = (props: PropTypes) => {
@@ -40,6 +40,13 @@ const Quiz = (props: PropTypes) => {
 
   // Prevent starting countdown before async request finishes
   const [loading, setLoading] = useState(true);
+
+  const resetGameHandler = () => {
+    props.showQuiz(false);
+    setPoints(0);
+    setIsJokerUsed({ step: 0, used: false });
+    setTimer(15);
+  };
 
   useEffect(() => {
     (async () => {
@@ -82,7 +89,7 @@ const Quiz = (props: PropTypes) => {
           gameOver={step === 10}
           earnedPoints={timer * 10}
           onPress={switchToQuestionPage}
-          navigateToHome={props.navigateToHome}
+          restartGame={resetGameHandler}
         />
       );
     }

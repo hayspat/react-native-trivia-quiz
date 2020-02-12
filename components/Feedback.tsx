@@ -10,7 +10,7 @@ type PropTypes = {
   page: "success" | "wrong" | "end" | "timeout";
   gameOver: boolean;
   earnedPoints?: number;
-  navigateToHome: React.Dispatch<React.SetStateAction<boolean>>;
+  restartGame: () => void;
 };
 
 const Feedback = ({
@@ -19,7 +19,7 @@ const Feedback = ({
   onPress,
   page,
   earnedPoints,
-  navigateToHome
+  restartGame
 }: PropTypes) => {
   const getSvg = () => {
     if (page === "success") {
@@ -55,7 +55,7 @@ const Feedback = ({
       <CustomText>Total: {points}</CustomText>
       <CustomButton
         title={gameOver ? "Play Again" : "Next Question"}
-        onPress={gameOver ? () => navigateToHome(false) : onPress}
+        onPress={gameOver ? restartGame : onPress}
       />
     </View>
   );
