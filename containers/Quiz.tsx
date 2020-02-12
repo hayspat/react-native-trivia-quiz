@@ -138,7 +138,11 @@ const Quiz = (props: PropTypes) => {
         let jokerEl = question.incorrect_answers.map((answer, index) => {
           if (index < 2) {
             return (
-              <CustomButton key={index} disabled title={decodeHTML(answer)} />
+              <CustomButton
+                key={index}
+                color="red"
+                title={decodeHTML(answer)}
+              />
             );
           } else {
             return (
