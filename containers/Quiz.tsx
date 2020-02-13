@@ -172,8 +172,8 @@ const Quiz = (props: PropTypes) => {
 
         // Sort JSX Nodes so order doesn't change when joker is used
         jokerEl.sort((a, b) => {
-          if (a.props.text < b.props.text) return -1;
-          if (a.props.text > b.props.text) return 1;
+          if (a.props.title < b.props.title) return -1;
+          if (a.props.title > b.props.title) return 1;
           else return 0;
         });
         return jokerEl;
